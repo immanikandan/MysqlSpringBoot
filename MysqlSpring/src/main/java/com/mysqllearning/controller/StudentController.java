@@ -3,6 +3,8 @@ package com.mysqllearning.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mysqllearning.model.Student;
+import com.mysqllearning.repository.StudentRepository;
 import com.mysqllearning.service.StudentService;
 
 @RestController
-@RequestMapping("/school")
+@RequestMapping("/v1")
 public class StudentController {
 	@Autowired
 	StudentService studentservice;
@@ -28,13 +31,32 @@ public class StudentController {
 		return studentservice.create(stu);
 	}
 	@GetMapping("/student")
-	public List<Student>retrieve() {
+	public Page<Student>retrieve() {
 		return studentservice.retrieve();
 	}
 	
-	@DeleteMapping("/student")
-	public void delete(@RequestBody Student stu) {
-		studentservice.delete(stu);
+	@DeleteMapping("/student/{id}")
+	public void delete(@PathVariable long id) {
+		studentservice.delete(id);
 	}
-
+	@PutMapping("/student/{id}")
+	public void update(@PathVariable("id") long id,@RequestBody Student stu) {
+		studentservice.update(id,stu);
+	}
+	@GetMapping("/student/{age}")
+	public List<Student> search(@PathVariable int age) {
+		
+		return studentservice.search(age);
+	}
+	@GetMapping("/student/search/{ch}")
+	public List<Student> searchbyname(@PathVariable char ch) {
+		
+		return studentservice.searchbyname(ch);
+	}
+	@GetMapping("/student/page/{page}")
+	public Page<Student> get(@PathVariable int page) {
+		return studentservice.get(page);
+	}
+	
+	
 }
