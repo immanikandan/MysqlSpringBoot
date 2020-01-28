@@ -40,4 +40,5 @@ public class StudentService {
 	 public Page<Student> get(int page) {
 			return studentdao.get(page);
 		}
+	 
 }

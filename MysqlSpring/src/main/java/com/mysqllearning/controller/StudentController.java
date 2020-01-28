@@ -48,6 +48,7 @@ public class StudentController {
 		
 		return studentservice.search(age);
 	}
+	
 	@GetMapping("/student/search/{ch}")
 	public List<Student> searchbyname(@PathVariable char ch) {
 		

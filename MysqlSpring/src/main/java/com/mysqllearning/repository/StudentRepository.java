@@ -20,4 +20,5 @@ public interface StudentRepository extends JpaRepository<Student, Long>,PagingAn
 	List<Student> findByNameEndsWith(char ch);
 	@Query(value = "SELECT u FROM Student u")
 	Page<Student> findAllStudent(Pageable page);
+	
 }
